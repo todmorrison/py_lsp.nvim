@@ -89,8 +89,8 @@ local function run_lsp_server(venv_name)
 
   if venv_name then
     if not string.match(venv_name, "bin/python") then
-			venv_name = venv_name .. "/bin/python"
-		end
+      venv_name = venv_name .. "/bin/python"
+    end
     on_init_fn = on_init(venv_name)
   else
     on_init_fn = build_on_init(option.get().source_strategies, option.get().default_venv_name)
