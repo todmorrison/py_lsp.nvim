@@ -80,7 +80,7 @@ end
 M.conda = function(_, venv_name)
 	-- If no standard venv found look for conda environments
 	local found_envs = {}
-    local json_env_list = vim.fn.systemlist("$CONDA_EXE env list --json | jq '{ envs: .envs }'")
+	local json_env_list = vim.fn.systemlist("$CONDA_EXE env list --json | jq '{ envs: .envs }'")
 	table.unpack = table.unpack or unpack -- 5.1 compatibility
 	local raw_env_list = { table.unpack(json_env_list, 3, #json_env_list - 2) }
 	for _, raw_env in ipairs(raw_env_list) do
