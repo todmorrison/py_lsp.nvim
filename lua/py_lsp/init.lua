@@ -1,4 +1,3 @@
-local nvim_lsp = require("lspconfig")
 local util = require("lspconfig/util")
 local option = require("py_lsp.options")
 local utils = require("py_lsp.utils")
@@ -150,7 +149,7 @@ local function run_lsp_server(venv_name)
   end
 
   -- Start LSP
-  nvim_lsp[option.get().language_server].setup(server_opts)
+  vim.lsp.config(option.get().language_server, { server_opts })
 end
 
 
