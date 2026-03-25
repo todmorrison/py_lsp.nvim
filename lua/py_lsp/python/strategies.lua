@@ -7,27 +7,27 @@ end
 local M = {}
 
 M.check_pyproject = function(workspace, target)
-    local pyproject_path = vim.fn.glob(path.join(workspace, "pyproject.toml"))
+	local pyproject_path = vim.fn.glob(path.join(workspace, "pyproject.toml"))
 
-    if pyproject_path ~= "" then
-        local f = io.open(pyproject_path, "r")
-        if f then
-            local content = f:read("*all")
-            f:close()
-            if content:match("%f[%w]" .. target .. "%f[%W]") then
-                print("Found pyproject.toml with " .. target .. " in: " .. pyproject_path)
-                return true
-            end
-        end
-    end
-    return false
+	if pyproject_path ~= "" then
+		local f = io.open(pyproject_path, "r")
+		if f then
+			local content = f:read("*all")
+			f:close()
+			if content:match("%f[%w]" .. target .. "%f[%W]") then
+				print("Found pyproject.toml with " .. target .. " in: " .. pyproject_path)
+				return true
+			end
+		end
+	end
+	return false
 end
 
 M.get_workspace = function(workspace)
-    if workspace == nil then
-        workspace = vim.fn.getcwd()
-    end
-    return workspace
+	if workspace == nil then
+		workspace = vim.fn.getcwd()
+	end
+	return workspace
 end
 
 M.default = function(workspace, venv_name)
@@ -64,7 +64,7 @@ end
 
 M.poetry = function(workspace, _)
 	-- If no standard venv found look for poetry
-    workspace = M.get_workspace(workspace)
+	workspace = M.get_workspace(workspace)
 
 	local match = vim.fn.glob(path.join(workspace, "poetry.lock"))
 
@@ -80,7 +80,7 @@ end
 M.conda = function(_, venv_name)
 	-- If no standard venv found look for conda environments
 	local found_envs = {}
-	local json_env_list = vim.fn.systemlist("$CONDA_EXE env list --json | jq '{ envs: .envs }'")
+	local json_env_list = vim.json.decode(vim.fn.system("$CONDA_EXE env list --json")).envs
 	table.unpack = table.unpack or unpack -- 5.1 compatibility
 	local raw_env_list = { table.unpack(json_env_list, 3, #json_env_list - 2) }
 	for _, raw_env in ipairs(raw_env_list) do
