@@ -82,7 +82,8 @@ M.conda = function(_, venv_name)
 	local found_envs = {}
 	local json_env_list = vim.json.decode(vim.fn.system("$CONDA_EXE env list --json")).envs
 	table.unpack = table.unpack or unpack -- 5.1 compatibility
-	local raw_env_list = { table.unpack(json_env_list, 3, #json_env_list - 2) }
+	-- local raw_env_list = { table.unpack(json_env_list, 3, #json_env_list - 2) }
+	local raw_env_list = { table.unpack(json_env_list, 1, #json_env_list - 1) }
 	for _, raw_env in ipairs(raw_env_list) do
 		local env = string.match(raw_env, '[^%s"]+')
 
